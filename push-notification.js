@@ -1,4 +1,4 @@
-var admin = require("firebase-admin");
+// var admin = require("firebase-admin");
 // var fcm = require("fcm-notification");
 const Device = require("./deviceSchema")
 
