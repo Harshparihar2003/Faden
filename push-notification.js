@@ -35,6 +35,15 @@ const saveMacAddress = async (req,res) => {
   }
 }
 
+const getMacAddress = async(req,res) => {
+  try {
+    const getMac = await Device.find();
+    res.json(getMac)
+} catch (error) {
+    throw new Error(error)
+}
+}
+
 
 async function getFCMTokensForMAC(macAddress) {
     try {
@@ -77,7 +86,7 @@ async function getFCMTokensForMAC(macAddress) {
 //     }
 // }
 
-module.exports = {saveMacAddress}
+module.exports = {saveMacAddress, getMacAddress}
 
 
 
