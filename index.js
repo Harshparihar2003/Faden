@@ -8,9 +8,9 @@ app.use(cors())
 dbConnect();
 app.use(express.json());
 
-app.use("/", (req,res)=>{
-    res.send("fnaskjbfiab")
-})
+// app.use("/", (req,res)=>{
+//     res.send("fnaskjbfiab")
+// })
 app.use("/api", require("./app.route"))
 
 app.listen(PORT, ()=>{
