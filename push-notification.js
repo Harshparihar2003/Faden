@@ -58,35 +58,53 @@ async function getFCMTokensForMAC(macAddress) {
     }
   }
 
-// exports.sendPushNotification = (req,res,next) => {
-//     const fcmTokens = getFCMTokensForMAC(macAddress);
-//     try {
-//         let message = {
-//             notification : {
-//                 title : "Test Notification",
-//                 body : "Notification Message"
-//             },
-//             token : fcmTokens,
-//         };
-//         FCM.send(message,function(err,res){
-//             if(err){
-//                 return res.status(500).send({
-//                     message : err
-//                 });
-//             }
-//             else{
-//                 return  res.status(200).send({
-//                     message : "Notification Sent"
-//                 })
-//             }
-//         })
-//     }
-//     catch(err){
-//         throw err;
-//     }
-// }
+const sendPushNotification = async (req,res,next) => {
+  const { macAddress } = req.body;
+  // if (!macAddress) {
+  //     return res.status(400).json({ message: 'MAC address not provided.' });
+  // }
+  try {
+    const fcmTokens = await getFCMTokensForMAC(macAddress);
+    console.log(fcmTokens);
 
-module.exports = {saveMacAddress, getMacAddress}
+    const tokenToDeviceMap = {};
+
+    for (const token of fcmTokens) {
+        tokenToDeviceMap[token] = macAddress;
+    }
+    console.log('FCM token to device mapping:', tokenToDeviceMap);
+
+      for (const token of fcmTokens) {
+        let message = {
+            notification: {
+                title: "Test Notification",
+                body: "Notification Message"
+            },
+            // token: token // Send message to each token individually
+        };
+
+      
+        // FCM.send(message,function(err,res){
+        //     if(err){
+        //         return res.status(500).send({
+        //             message : err
+        //         });
+        //     }
+        //     else{
+        //         return  res.status(200).send({
+        //             message : "Notification Sent"
+        //         })
+        //     }
+        // })
+      }
+        res.status(200).json({ message: 'Push notifications sent successfully.' });
+    }
+    catch(err){
+        throw err;
+    }
+}
+
+module.exports = {saveMacAddress, getMacAddress, sendPushNotification}
 
 
 
