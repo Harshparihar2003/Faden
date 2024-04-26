@@ -2,12 +2,15 @@ const express = require("express");
 const dbConnect = require("./dbconnect");
 const app = express();
 const cors = require("cors") 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors())
 dbConnect();
 app.use(express.json());
 
+app.use("/", ()=>{
+    res.send("fnaskjbfiab")
+})
 app.use("/api", require("./app.route"))
 
 app.listen(PORT, ()=>{
